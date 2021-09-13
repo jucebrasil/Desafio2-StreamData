@@ -36,8 +36,8 @@ function AuthProvider({ children }: AuthProviderData) {
   const [user, setUser] = useState({} as User);
   const [userToken, setUserToken] = useState('');
 
-  // get CLIENT_ID from environment variables
-
+  const { CLENT_ID } = process.env;
+  
   async function signIn() {
     try {
       // set isLoggingIn to true
@@ -56,16 +56,16 @@ function AuthProvider({ children }: AuthProviderData) {
       // verify if startAsync response.type equals "success" and response.params.error differs from "access_denied"
       // if true, do the following:
 
-        // verify if startAsync response.params.state differs from STATE
-        // if true, do the following:
-          // throw an error with message "Invalid state value"
+      // verify if startAsync response.params.state differs from STATE
+      // if true, do the following:
+      // throw an error with message "Invalid state value"
 
-        // add access_token to request's authorization header
+      // add access_token to request's authorization header
 
-        // call Twitch API's users route
+      // call Twitch API's users route
 
-        // set user state with response from Twitch API's route "/users"
-        // set userToken state with response's access_token from startAsync
+      // set user state with response from Twitch API's route "/users"
+      // set userToken state with response's access_token from startAsync
     } catch (error) {
       // throw an error
     } finally {
@@ -95,7 +95,7 @@ function AuthProvider({ children }: AuthProviderData) {
 
   return (
     <AuthContext.Provider value={{ user, isLoggingOut, isLoggingIn, signIn, signOut }}>
-      { children }
+      {children}
     </AuthContext.Provider>
   )
 }
