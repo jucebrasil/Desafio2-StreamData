@@ -36,11 +36,28 @@ function AuthProvider({ children }: AuthProviderData) {
   const [user, setUser] = useState({} as User);
   const [userToken, setUserToken] = useState('');
 
-  const { CLENT_ID } = process.env;
-  
+  const { CLIENT_ID } = process.env;
+
   async function signIn() {
     try {
-      // set isLoggingIn to true
+      //set isLoggingIn to true
+      setIsLoggingIn(true);
+
+      const REDIRECT_URI = makeRedirectUri({ useProxy: true });
+      const RESPONSE_TYPE = 'token';
+      const SCOPE = encodeURI('openid user:read:email user:read:follows');
+      const FORCE_VERIFY = true;
+      const STATE = generateRandom(30);
+
+      const authUrl = twitchEndpoints.authorization +
+        `?client_id=${CLIENT_ID}` +
+        `&redirect_uri=${REDIRECT_URI}` +
+        `&response_type=${RESPONSE_TYPE}` +
+        `&scope=${SCOPE}` +
+        `&force_verify=${FORCE_VERIFY}` +
+        `&state=${STATE}`;
+
+      const authResponse = await startAsync({ authUrl });
 
       // REDIRECT_URI - create OAuth redirect URI using makeRedirectUri() with "useProxy" option set to true
       // RESPONSE_TYPE - set to "token"
