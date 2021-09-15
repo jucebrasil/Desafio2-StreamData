@@ -59,6 +59,24 @@ function AuthProvider({ children }: AuthProviderData) {
 
       const authResponse = await startAsync({ authUrl });
 
+      if (authResponse.type === 'success' && authResponse.params.error !== 'access_denied') {
+        if (authResponse.params.state !== STATE) {
+          throw new Error('Invalid state value');
+        }
+        api.defaults.headers.authorization = `Bearer ${authResponse.params.access_token}`;
+
+        const userResponse = await api.get('/users');
+
+        setUser({
+          id: userResponse.data.data[0].id,
+          display_name: userResponse.data.data[0].display_name,
+          email: userResponse.data.data[0].email,
+          profile_image_url: userResponse.data.data[0].profile_image_url,
+        });
+
+        setUserToken(authResponse.params.access_token);
+      }
+
       // REDIRECT_URI - create OAuth redirect URI using makeRedirectUri() with "useProxy" option set to true
       // RESPONSE_TYPE - set to "token"
       // SCOPE - create a space-separated list of the following scopes: "openid", "user:read:email" and "user:read:follows"
@@ -84,9 +102,10 @@ function AuthProvider({ children }: AuthProviderData) {
       // set user state with response from Twitch API's route "/users"
       // set userToken state with response's access_token from startAsync
     } catch (error) {
-      // throw an error
+      throw new Error();
     } finally {
-      // set isLoggingIn to false
+      setIsLoggingIn(false);
+
     }
   }
 
