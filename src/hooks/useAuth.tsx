@@ -127,6 +127,7 @@ function AuthProvider({ children }: AuthProviderData) {
 
   useEffect(() => {
     // add client_id to request's "Client-Id" header
+    api.defaults.headers['Client-Id'] = CLIENT_ID;
   }, [])
 
   return (
