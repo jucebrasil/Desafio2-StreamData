@@ -11,7 +11,7 @@
   </a>
 
 <h4 align="center" >
-Curso Rocketseat Trilha React Native Chapter II - Com este desafio pratiquei e aprendi a técnica de login social, reforçando os conhecimentos aquiridos no Capítulo II.
+Curso Rocketseat Trilha React Native Chapter II - Com este desafio pratiquei e aprendi implementar todo o fluxo de login e logout utilizando o OAuth da Twitch., reforçando os conhecimentos aquiridos no Capítulo II.
 Ë uma satisfação imensa poder aprender a desenvolver soluções em uma das melhores tecnologias do momento. Agora partiu Chapter III uhuu!!
 </h1>
 
